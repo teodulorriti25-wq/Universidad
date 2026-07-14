@@ -1,17 +1,19 @@
 package org.example.modelo;
 
-public class Alumno {
-    private int numExpediente ;
-    private String nombre;
+public class Alumno extends PersonaUT implements Ensenable, Evaluable {
+
+    private int numExpediente;
     private int edad;
     private String carrera;
     private int cuatrimestres;
-    private static final String[] CARRERAS_VALIDAS = {"TI", "Qui", "Mec", "Mkt"};
+
+    private static final String[] CARRERAS_VALIDAS={"TI","Qui","Mec","Mkt"};
+
     public Alumno(){}
 
-    public Alumno(int numExpediente, String nombre, int edad, String carrera, int cuatrimestres) {
+    public Alumno(int numExpediente,String nombre,String curp,int edad,String carrera,int cuatrimestres){
+        super(nombre,curp);
         setNumExpediente(numExpediente);
-        setNombre(nombre);
         setEdad(edad);
         setCarrera(carrera);
         setCuatrimestres(cuatrimestres);
@@ -25,27 +27,13 @@ public class Alumno {
         this.numExpediente = numExpediente;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre){
-        if(nombre.isBlank()|| nombre.isEmpty()){
-            System.out.println("Error en el nombre requerido");
-        }
-        this.nombre = nombre;
-    }
-
     public int getEdad() {
         return edad;
     }
 
     public void setEdad(int edad) {
         if(edad>15 && edad<110){
-            this.edad = edad;
-        }
-        else{
-
+            this.edad=edad;
         }
     }
 
@@ -54,40 +42,55 @@ public class Alumno {
     }
 
     public void setCarrera(String carrera) {
+
         if(validarCarreras(carrera)){
-            this.carrera = carrera;
+            this.carrera=carrera;
         }else{
-            System.out.println("CARRERA NO VALIDA");
+            System.out.println("Carrera no valida");
         }
+
     }
 
-    public int getCuatrimestre() {
+    public int getCuatrimestres() {
         return cuatrimestres;
     }
 
     public void setCuatrimestres(int cuatrimestres) {
-        if(cuatrimestres>0 && cuatrimestres<12){
-            this.cuatrimestres = cuatrimestres;
-        }
-        else{
-            System.out.println("EL CUATRIMESTRE DEBE SER ENTRE 1 Y 11");
+        if(cuatrimestres>=1 && cuatrimestres<=11){
+            this.cuatrimestres=cuatrimestres;
         }
     }
-    @Override
-    public String toString() {
-        return "Numero de Expediente: " + numExpediente +'\n' +
-                "Nombre:" + nombre + '\n' +
-                "Edad:" + edad + '\n'+
-                "Carrera:" + carrera + '\n' +
-                "Cuatrimestre:" + cuatrimestres +'\n';
-    }
+
     public boolean validarCarreras(String carrera){
-        boolean carreraValida=false;
-        for(String validar: CARRERAS_VALIDAS){
-            if(carrera.equalsIgnoreCase(validar)){
+        for(String c:CARRERAS_VALIDAS){
+            if(c.equalsIgnoreCase(carrera)){
                 return true;
             }
         }
-        return carreraValida;
+        return false;
+    }
+
+    @Override
+    public String mostrarTipoPersona() {
+        return "----- ALUMNO -----";
+    }
+
+    @Override
+    public void aprender() {
+        System.out.println(getNombre()+" esta aprendiendo.");
+    }
+
+    @Override
+    public void recibirEvaluacion() {
+        System.out.println(getNombre()+" recibe una evaluacion.");
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                "Numero de expediente: " + getNumExpediente() + "\n" +
+                "Edad: " + getEdad() + "\n" +
+                "Carrera: " + getCarrera() + "\n" +
+                "Cuatrimestre: " + getCuatrimestres() + "\n";
     }
 }

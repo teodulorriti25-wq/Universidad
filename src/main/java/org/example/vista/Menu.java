@@ -3,6 +3,7 @@ import org.example.dao.AlumnoDAO;
 import org.example.modelo.Alumno;
 import org.example.dao.ProfesorDAO;
 import org.example.modelo.Profesor;
+import org.example.modelo.PersonaUT;
 
 import java.io.*;
 import java.util.*;
@@ -10,12 +11,12 @@ import java.util.*;
 public class Menu {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     AlumnoDAO alumnoDAO = new AlumnoDAO();
-    Alumno alumno = new Alumno();
     ProfesorDAO profesorDAO = new ProfesorDAO();
-    Profesor profesor = new Profesor();
+    private ArrayList<PersonaUT> comunidadUniversitaria = new ArrayList<>();
 
     private void registrar(){
         try {
+            Alumno alumno = new Alumno();
             System.out.println("Número de expediente: ");
             alumno.setNumExpediente(Integer.parseInt(br.readLine()));
             System.out.println("Nombre del alumno: ");
@@ -27,6 +28,7 @@ public class Menu {
             System.out.println("Cuatrimestre del alumno: ");
             alumno.setCuatrimestres(Integer.parseInt(br.readLine()));
             alumnoDAO.nuevoAlumno(alumno);
+            comunidadUniversitaria.add(alumno);
         }catch(Exception e){
             System.out.println("Error al ingresar: " + e.getMessage());
         }
@@ -43,6 +45,7 @@ public class Menu {
 
     private void modificar(){
         try {
+            Alumno alumno = new Alumno();
             System.out.println("Modificar alumno por numero de expediente:");
             System.out.println("Numero de expediente: ");
             alumno.setNumExpediente(Integer.parseInt(br.readLine()));
@@ -85,6 +88,7 @@ public class Menu {
 
     private void registrarProfesor(){
         try{
+            Profesor profesor = new Profesor();
             System.out.println("Número de empleado: ");
             profesor.setNumEmpleado(Integer.parseInt(br.readLine()));
             System.out.println("Nombre del profesor: ");
@@ -96,6 +100,7 @@ public class Menu {
             System.out.println("Sueldo del profesor: ");
             profesor.setSueldo(Double.parseDouble(br.readLine()));
             profesorDAO.nuevoProfesor(profesor);
+            comunidadUniversitaria.add(profesor);
         }catch(Exception e){
             System.out.println("Error al ingresar: " + e.getMessage());
         }
@@ -112,24 +117,18 @@ public class Menu {
 
     private void modificarProfesor(){
         try{
-
+            Profesor profesor = new Profesor();
             System.out.println("Numero de empleado:");
             profesor.setNumEmpleado(Integer.parseInt(br.readLine()));
-
             System.out.println("Nombre:");
             profesor.setNombre(br.readLine());
-
             System.out.println("Edad:");
             profesor.setEdad(Integer.parseInt(br.readLine()));
-
             System.out.println("Especialidad:");
             profesor.setEspecialidad(br.readLine());
-
             System.out.println("Sueldo:");
             profesor.setSueldo(Double.parseDouble(br.readLine()));
-
             profesorDAO.actualizarProfesor(profesor);
-
         }catch(IOException e){
             System.out.println(e.getMessage());
         }
@@ -158,10 +157,22 @@ public class Menu {
         }
     }
 
+    private void mostrarComunidadUniversitaria(){
+        if(comunidadUniversitaria.isEmpty()){
+            System.out.println("No hay personas registradas.");
+            return;
+        }
+        System.out.println("====== COMUNIDAD UNIVERSITARIA ======");
+        for(PersonaUT persona : comunidadUniversitaria){
+            System.out.println(persona);
+            System.out.println("--------------------------------");
+        }
+    }
+
     public void menu(){
         try{
             int salir = 0;
-            while(salir != 11){
+            while(salir != 12){
                 System.out.println("=========== MENU ===========");
                 System.out.println("1. Registrar Alumno");
                 System.out.println("2. Listar Alumnos");
@@ -173,7 +184,8 @@ public class Menu {
                 System.out.println("8. Modificar Profesor");
                 System.out.println("9. Eliminar Profesor");
                 System.out.println("10. Buscar Profesor");
-                System.out.println("11. Salir");
+                System.out.println("11. Mostrar Comunidad Universitaria");
+                System.out.println("12. Salir");
                 System.out.print("Seleccione una opcion: ");
                 salir = Integer.parseInt(br.readLine());
                 switch(salir){
@@ -208,10 +220,10 @@ public class Menu {
                         buscarProfesor();
                     break;
                     case 11:
-                        System.out.println("Baiii!");
+                        mostrarComunidadUniversitaria();
                     break;
-                    default:
-                        System.out.println("Opcion invalida");
+                    case 12:
+                        System.out.println("Baiii!");
                     break;
                 }
             }

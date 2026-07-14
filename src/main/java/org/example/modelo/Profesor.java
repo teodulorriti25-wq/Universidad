@@ -1,18 +1,19 @@
 package org.example.modelo;
 
-public class Profesor {
+public class Profesor extends PersonaUT implements Ensenador, Evaluador {
+
     private int numEmpleado;
-    private String nombre;
     private int edad;
     private String especialidad;
     private double sueldo;
-    private static final String[] ESPECIALIDADES_VALIDAS = {"TI","Qui","Mec","Mkt"};
+
+    private static final String[] ESPECIALIDADES_VALIDAS={"TI","Qui","Mec","Mkt"};
 
     public Profesor(){}
 
-    public Profesor(int numEmpleado, String nombre, int edad, String especialidad, double sueldo) {
+    public Profesor(int numEmpleado, String nombre, String curp, int edad, String especialidad, double sueldo){
+        super(nombre,curp);
         setNumEmpleado(numEmpleado);
-        setNombre(nombre);
         setEdad(edad);
         setEspecialidad(especialidad);
         setSueldo(sueldo);
@@ -26,26 +27,13 @@ public class Profesor {
         this.numEmpleado = numEmpleado;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        if(nombre.isBlank() || nombre.isEmpty()){
-            System.out.println("Error en el nombre requerido");
-        }
-        this.nombre = nombre;
-    }
-
     public int getEdad() {
         return edad;
     }
 
     public void setEdad(int edad) {
-        if(edad > 20 && edad < 80){
-            this.edad = edad;
-        }else{
-            System.out.println("LA EDAD NO ES VALIDA");
+        if(edad>20 && edad<80){
+            this.edad=edad;
         }
     }
 
@@ -55,9 +43,7 @@ public class Profesor {
 
     public void setEspecialidad(String especialidad) {
         if(validarEspecialidad(especialidad)){
-            this.especialidad = especialidad;
-        }else{
-            System.out.println("ESPECIALIDAD NO VALIDA");
+            this.especialidad=especialidad;
         }
     }
 
@@ -66,29 +52,41 @@ public class Profesor {
     }
 
     public void setSueldo(double sueldo) {
-        if(sueldo > 0){
-            this.sueldo = sueldo;
-        }else{
-            System.out.println("EL SUELDO DEBE SER MAYOR A 0");
+        if(sueldo>0){
+            this.sueldo=sueldo;
         }
+    }
+
+    public boolean validarEspecialidad(String especialidad){
+        for(String e:ESPECIALIDADES_VALIDAS){
+            if(e.equalsIgnoreCase(especialidad)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public String mostrarTipoPersona() {
+        return "----- PROFESOR -----";
+    }
+
+    @Override
+    public void ensenar() {
+        System.out.println(getNombre()+" esta enseñando.");
+    }
+
+    @Override
+    public void evaluar() {
+        System.out.println(getNombre()+" esta evaluando.");
     }
 
     @Override
     public String toString() {
-        return "Numero de Empleado: " + numEmpleado + '\n' +
-                "Nombre: " + nombre + '\n' +
-                "Edad: " + edad + '\n' +
-                "Especialidad: " + especialidad + '\n' +
-                "Sueldo: $" + sueldo + '\n';
-    }
-
-    public boolean validarEspecialidad(String especialidad){
-        boolean especialidadValida = false;
-        for(String validar : ESPECIALIDADES_VALIDAS){
-            if(especialidad.equalsIgnoreCase(validar)){
-                return true;
-            }
-        }
-        return especialidadValida;
+        return super.toString() +
+                "Numero de empleado: " + getNumEmpleado() + "\n" +
+                "Edad: " + getEdad() + "\n" +
+                "Especialidad: " + getEspecialidad() + "\n" +
+                "Sueldo: $" + getSueldo() + "\n";
     }
 }

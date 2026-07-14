@@ -14,7 +14,7 @@ public class AlumnoDAO {
             stm.setString(2, alumno.getNombre());
             stm.setInt(3, alumno.getEdad());
             stm.setString(4, alumno.getCarrera());
-            stm.setInt(5, alumno.getCuatrimestre());
+            stm.setInt(5, alumno.getCuatrimestres());
             int filas = stm.executeUpdate();
             if(filas > 0){
                 registrado = true;
@@ -56,7 +56,7 @@ public class AlumnoDAO {
             stm.setString(1, alumno.getNombre());
             stm.setInt(2, alumno.getEdad());
             stm.setString(3, alumno.getCarrera());
-            stm.setInt(4, alumno.getCuatrimestre());
+            stm.setInt(4, alumno.getCuatrimestres());
             stm.setInt(5, alumno.getNumExpediente());
             int filas = stm.executeUpdate();
             if(filas > 0){
