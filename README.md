@@ -1,10 +1,9 @@
-´´´mermaid, classDiagram
+```mermaid
+classDiagram
     %% Paquete Config
     class Conexion {
-        -String URL$
-        -String USER$
-        -String PASSWORD$
-        +conectar()$ Connection
+        -String URL$-String USER$
+        -String PASSWORD$+conectar()$ Connection
     }
 
     %% Paquete DAO
@@ -112,4 +111,3 @@
     Profesor --|> Persona : Hereda de
     Alumno ..|> Estudiante : Implementa
     Profesor ..|> Empleado : Implementa
-    ´´´
