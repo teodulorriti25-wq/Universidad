@@ -90,21 +90,21 @@ classDiagram
     }
 
     %% Relaciones de las Vistas (Llamadas)
-    Main -->|"Llama"| MenuGeneral
-    MenuGeneral -->|"Llama"| MenuAlumno
-    MenuGeneral -->|"Llama"| MenuProfesor
+    Main --> MenuGeneral : Llama
+    MenuGeneral --> MenuAlumno : Llama
+    MenuGeneral --> MenuProfesor : Llama
 
     %% Relaciones con DAO (Uso)
-    MenuAlumno -->|"Usa"| AlumnoDAO
-    MenuProfesor -->|"Usa"| ProfesorDAO
-    AlumnoDAO -->|"Usa"| Conexion
-    ProfesorDAO -->|"Usa"| Conexion
+    MenuAlumno --> AlumnoDAO : Usa
+    MenuProfesor --> ProfesorDAO : Usa
+    AlumnoDAO --> Conexion : Usa
+    ProfesorDAO --> Conexion : Usa
 
     %% Relaciones con el Modelo (Uso)
-    MenuAlumno -->|"Usa"| Alumno
-    MenuProfesor -->|"Usa"| Profesor
-    AlumnoDAO -->|"Usa"| Alumno
-    ProfesorDAO -->|"Usa"| Profesor
+    MenuAlumno --> Alumno : Usa
+    MenuProfesor --> Profesor : Usa
+    AlumnoDAO --> Alumno : Usa
+    ProfesorDAO --> Profesor : Usa
 
     %% Herencia y Realización
     Alumno --|> Persona : Hereda de
